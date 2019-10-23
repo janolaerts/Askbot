@@ -1,0 +1,47 @@
+body{
+    background: black;
+}
+
+h1{
+    color: white;
+    display: block;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 8vw;
+}
+.chat-container{
+    background: white;
+    width: 98%;
+    height: 50%;
+    margin: 0 auto;
+}
+.chat-container .message{
+    color: darkblue;
+}
+form{
+    margin-top: 5%;
+    width: 98%;
+    margin: 0 auto;
+}
+form input{
+    width: 100%;
+    height: 3%;
+    margin-top: 1%;
+    border: none;
+    font-weight: bold;
+    color: darkblue;
+}
+form .submit{
+    color: black;
+    border: 1px solid white;
+    background: white;
+}
+.typing{
+    font-size: 100%;
+    position: relative;
+    background: white;
+    width: 98%;
+    margin: 1% auto;
+    color: darkblue;
+}
