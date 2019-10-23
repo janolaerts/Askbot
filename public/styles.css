@@ -1,7 +1,53 @@
 body{
     background: black;
 }
-
+nav{
+    position: fixed;
+    top: 25%;
+    right: 0%;
+    height: 15%;
+    width: 50px;
+}
+nav ul{
+    height: 100%;
+}
+nav ul li{
+    list-style-type: none;
+    width: 100%;
+    cursor: pointer;
+}
+nav ul li.bot-ask{
+    background: orange;
+    position: absolute;
+    top: 0%;
+    left: 0px;
+    cursor: pointer;
+    height: 70%;
+}
+nav ul li.bot-ask img{
+    position: relative;
+    top: 15%;
+    left: 13%;
+    cursor: pointer;
+}
+nav ul li.bot-post{
+    background: darkblue;
+    position: absolute;
+    top: 70%;
+    left: 0px;
+    height: 30%
+}
+nav ul li.bot-post img{
+    position: relative;
+    top: 10%;
+    cursor: pointer;
+    width: 90%;
+    left: 5%;
+}
+nav ul li a{
+    text-decoration: none;
+    color: white;
+}
 h1{
     color: white;
     display: block;
