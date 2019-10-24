@@ -1,3 +1,4 @@
+//websockets back-end
 const express = require('express');
 const socket = require('socket.io');
 
@@ -16,9 +17,25 @@ io.on('connection', socket => {
 
     socket.on('chat', data => {
         io.sockets.emit('chat', data);
+        Message.create(data);
     })
 
     socket.on('typing', data => {
         socket.broadcast.emit('typing', data);
     })
 })
+
+//mongo
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/chatbot');
+mongoose.Promise = global.Promise;
+const Schema = mongoose.Schema;
+
+const MessageSchema = new Schema ({
+    user: String,
+    message: String
+})
+
+const Message = mongoose.model('message', MessageSchema);
+
+module.exports = Message;
