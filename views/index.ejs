@@ -15,12 +15,16 @@
             <li class="bot-post"><a href="/post"><img class="bot-post" src="./img/upload.svg" width="100%" alt="textbox"></a></li>
         </ul>
     </nav>
-    <h1>Chatbot</h1>
+    <h1>Askbot</h1>
     <div class="typing"></div>
     <div class="chat-container"></div>
-    <form class="messageForm">
+    <form class="questionForm">
         <input type="text" placeholder="User" id="user">
-        <input type="text" placeholder="Question" id="message">
+        <select name="questions" id="questions">
+            <option>Select a question you want to ask</option>
+            <option>What is the price of</option>
+        </select>
+        <input type="text" placeholder="Question" id="question">
         <input type="submit" class="submit">
     </form>
     <script src="./modules/serverFront.js"></script>

@@ -1,25 +1,25 @@
 const socket = io.connect('http://localhost:5000');
 
-const messageForm = document.querySelector('.messageForm');
+const questionForm = document.querySelector('.questionForm');
 const chatContainer = document.querySelector('.chat-container');
 const typing = document.querySelector('.typing');
 
-messageForm.addEventListener('submit', e => {
+questionForm.addEventListener('submit', e => {
     e.preventDefault();
 
-    let user = messageForm['user'].value;
-    let message = messageForm['message'].value;
-    socket.emit('chat', { user: user, message: message });
-    messageForm['message'].value = '';
+    let user = questionForm['user'].value;
+    let question = questionForm['question'].value;
+    socket.emit('chat', { user: user, question: question });
+    questionForm['question'].value = '';
 })
 
-messageForm['message'].addEventListener('keypress', e => {
-    let user = messageForm['user'].value;
+questionForm['question'].addEventListener('keypress', e => {
+    let user = questionForm['user'].value;
     socket.emit('typing', { user: user });
 })
 
 socket.on('chat', data => {
-    chatContainer.innerHTML += `<div class="message"><strong>${data.user}:</strong> ${data.message}</div>`;
+    chatContainer.innerHTML += `<div class="message"><strong>${data.user}:</strong> ${data.question}</div>`;
     typing.innerHTML = '';
 })
 

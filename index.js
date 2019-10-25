@@ -3,7 +3,6 @@ const express = require('express');
 const socket = require('socket.io');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const app = express();
 
 //middleware
@@ -26,7 +25,9 @@ app.get('/', (request, response) => {
 
 app.get('/post', (request, response) => {
     response.render('post');
-    Answer.create({ question: request.query.question, answer: request.query.answer });
+    if(request.query.question && request.query.answer){
+        Answer.create({ question: request.query.question, answer: request.query.answer });
+    }
 })
 
 //websockets
@@ -37,6 +38,8 @@ io.on('connection', socket => {
 
     socket.on('chat', data => {
         io.sockets.emit('chat', data);
+        Question.create(data);
+        Answer.findOne({ question: `${data.question}` }).then(data => console.log(data));
     })
 
     socket.on('typing', data => {
@@ -50,9 +53,15 @@ mongoose.connect('mongodb://localhost/chatbot');
 mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
-const AnswerSchema = new Schema ({
+const QuestionSchema = new Schema({
+    user: String,
+    question: String
+})
+
+const AnswerSchema = new Schema({
     question: String,
     answer: String
 })
 
+const Question = mongoose.model('question', QuestionSchema);
 const Answer = mongoose.model('answer', AnswerSchema);
