@@ -1,15 +1,35 @@
-//websockets back-end
+//back-end
 const express = require('express');
 const socket = require('socket.io');
-
+const router = express.Router();
+const bodyParser = require('body-parser');
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const app = express();
 
+//middleware
+app.use(bodyParser.json());
+app.use(express.static('public'));
+app.use('/api', router);
+
+//view engine
+app.set('view engine', 'ejs');
+
+//server setup
 const server = app.listen(process.env.port || 5000, () => {
     console.log('now listening to port 5000');
 })
 
-app.use(express.static('public'));
+//requests
+app.get('/', (request, response) => {
+    response.render('index');
+})
 
+app.get('/post', (request, response) => {
+    response.render('post');
+    Answer.create({ question: request.query.question, answer: request.query.answer });
+})
+
+//websockets
 const io = socket(server);
 
 io.on('connection', socket => {
@@ -17,7 +37,6 @@ io.on('connection', socket => {
 
     socket.on('chat', data => {
         io.sockets.emit('chat', data);
-        Message.create(data);
     })
 
     socket.on('typing', data => {
@@ -31,11 +50,9 @@ mongoose.connect('mongodb://localhost/chatbot');
 mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
-const MessageSchema = new Schema ({
-    user: String,
-    message: String
+const AnswerSchema = new Schema ({
+    question: String,
+    answer: String
 })
 
-const Message = mongoose.model('message', MessageSchema);
-
-module.exports = Message;
+const Answer = mongoose.model('answer', AnswerSchema);

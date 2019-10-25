@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+    <title>Chatbot</title>
+</head>
+<body>
+    <div class="info"></div>
+    <nav>
+        <ul>
+            <li class="bot-ask"><a href="/"><img class="bot-ask" src="./img/robot.svg" width="75%" alt="robot"></a></li>
+            <li class="bot-post"><a href="/post"><img class="bot-post" src="./img/upload.svg" width="100%" alt="textbox"></a></li>
+        </ul>
+    </nav>
+    <h1>Post answers to the database</h1>
+    <form class="post-form">
+        <input id="question" name="question" type="textarea" placeholder="Post your question">
+        <input id="answer" name="answer" type="text" placeholder="Post your automated answer">
+        <input type="submit" value="submit">
+    </form>
+    <script src="./modules/nav.js"></script>
+    <script src="./modules/post.js"></script>
+</body>
+</html>
