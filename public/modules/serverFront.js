@@ -9,28 +9,16 @@ questionForm.addEventListener('submit', e => {
 
     let user = questionForm['user'].value;
     let question = questionForm['question'].value;
-    socket.emit('chat', { user: user, question: question });
+    socket.emit('message', { user: user, question: question });
+    socket.emit('question', { question: question });
     questionForm['question'].innerHTML = '<option>Select the question you want to ask</option>';
 })
 
-questionForm['question'].addEventListener('keypress', e => {
-    let user = questionForm['user'].value;
-    socket.emit('typing', { user: user });
-})
-
-socket.on('chat', data => {
+socket.on('message', data => {
     chatContainer.innerHTML += `<div class="message"><strong>${data.user}:</strong> ${data.question}</div>`;
     typing.innerHTML = '';
 })
 
-socket.on('typing', data => {
-    typing.innerHTML = `<p><strong>${data.user} is typing</strong></p>`;
-})
-
-socket.on('messages', data => {
-    console.log('data received', data);
-})
-
-socket.on('answer', data => {
-    console.log(data);
+socket.on('question', data => {
+    chatContainer.innerHTML += `<div class="message"><strong>Askbot:</strong> ${data.answer}</div>`;
 })

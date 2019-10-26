@@ -36,18 +36,13 @@ const io = socket(server);
 io.on('connection', socket => {
     console.log('socket connection has been made', socket.id);
 
-    socket.on('chat', data => {
-        io.sockets.emit('chat', data);
+    socket.on('message', data => {
+        io.sockets.emit('message', data);
         Question.create(data);
-        Answer.findOne({ question: `${data.question}` }).then(data => console.log(data.answer));
     })
 
-    socket.on('typing', data => {
-        socket.broadcast.emit('typing', data);
-    })
-
-    socket.on('answer', data => {
-        io.sockets.emit('answer', data);
+    socket.on('question', data => {
+        Answer.findOne({ question: `${data.question}` }).then(data => io.sockets.emit('question', data));
     })
 })
 
