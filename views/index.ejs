@@ -20,11 +20,12 @@
     <div class="chat-container"></div>
     <form class="questionForm">
         <input type="text" placeholder="User" id="user">
-        <select name="questions" id="questions">
-            <option>Select a question you want to ask</option>
-            <option>What is the price of</option>
+        <select class="questions" name="questions" id="question">
+            <option>Select the question you want to ask</option>
+            <% data.map(item => { %>
+                <option><%= item.question %></option>
+            <% }) %>
         </select>
-        <input type="text" placeholder="Question" id="question">
         <input type="submit" class="submit">
     </form>
     <script src="./modules/serverFront.js"></script>

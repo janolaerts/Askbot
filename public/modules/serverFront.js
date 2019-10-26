@@ -10,7 +10,7 @@ questionForm.addEventListener('submit', e => {
     let user = questionForm['user'].value;
     let question = questionForm['question'].value;
     socket.emit('chat', { user: user, question: question });
-    questionForm['question'].value = '';
+    questionForm['question'].innerHTML = '<option>Select the question you want to ask</option>';
 })
 
 questionForm['question'].addEventListener('keypress', e => {
@@ -29,4 +29,8 @@ socket.on('typing', data => {
 
 socket.on('messages', data => {
     console.log('data received', data);
+})
+
+socket.on('answer', data => {
+    console.log(data);
 })

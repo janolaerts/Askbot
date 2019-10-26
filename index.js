@@ -20,7 +20,7 @@ const server = app.listen(process.env.port || 5000, () => {
 
 //requests
 app.get('/', (request, response) => {
-    response.render('index');
+    Answer.find().then(data => response.render('index', { data: data }));
 })
 
 app.get('/post', (request, response) => {
@@ -39,11 +39,15 @@ io.on('connection', socket => {
     socket.on('chat', data => {
         io.sockets.emit('chat', data);
         Question.create(data);
-        Answer.findOne({ question: `${data.question}` }).then(data => console.log(data));
+        Answer.findOne({ question: `${data.question}` }).then(data => console.log(data.answer));
     })
 
     socket.on('typing', data => {
         socket.broadcast.emit('typing', data);
+    })
+
+    socket.on('answer', data => {
+        io.sockets.emit('answer', data);
     })
 })
 
