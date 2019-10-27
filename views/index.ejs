@@ -18,15 +18,15 @@
     <h1>Askbot</h1>
     <div class="thinking"></div>
     <div class="chat-container"></div>
-    <form class="questionForm" action="/" method="POST">
-        <input type="text" placeholder="Enter your name" id="user">
-        <select class="questions" name="questions" id="question">
+    <form class="questionForm" method="POST" action="/">
+        <input type="text" placeholder="Enter your name" id="user" name="user">
+        <select id="question" name="question">
             <option>Select the question you want to ask</option>
             <% data.map(item => { %>
                 <option><%= item.question %></option>
             <% }) %>
         </select>
-        <input type="submit" class="submit">
+        <input value="submit" type="submit">
         <div style="color: white; font-weight: bold;"></div>
     </form>
     <script src="./modules/serverFront.js"></script>

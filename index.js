@@ -7,7 +7,7 @@ const app = express();
 //middleware
 app.use(bodyParser.json());
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 //view engine
 app.set('view engine', 'ejs');
@@ -16,6 +16,9 @@ app.set('view engine', 'ejs');
 const server = app.listen(process.env.port || 5000, () => {
     console.log('now listening to port 5000');
 })
+
+//websockets
+const io = socket(server);
 
 //requests
 app.get('/', (request, response) => {
@@ -29,25 +32,16 @@ app.get('/post', (request, response) => {
     }
 })
 
-app.post('/', (request, response) => {
-    console.log('POST request received');
-    response.end();
-})
+app.post('/', urlencodedParser, (request, response) => {
+    let user = request.body.user;
+    let question = request.body.question;
 
-//websockets
-const io = socket(server);
+    io.sockets.emit('message', { user: user, question: question });
+    if(user && question != 'Select the question you want to ask'){
+        Answer.findOne({ question: question }).then(data => io.sockets.emit('question', data));
+    }
 
-io.on('connection', socket => {
-    console.log('socket connection has been made', socket.id);
-
-    socket.on('message', data => {
-        io.sockets.emit('message', data);
-        Question.create(data);
-    })
-
-    socket.on('question', data => {
-        Answer.findOne({ question: `${data.question}` }).then(data => io.sockets.emit('question', data));
-    })
+    //Answer.find().then(data => response.render('index', { data: data }));
 })
 
 //mongo
@@ -66,5 +60,4 @@ const AnswerSchema = new Schema({
     answer: String
 })
 
-const Question = mongoose.model('question', QuestionSchema);
 const Answer = mongoose.model('answer', AnswerSchema);
