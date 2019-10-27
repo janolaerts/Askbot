@@ -8,6 +8,7 @@ npm install
 ```
 
 ## Usage
+In the terminal type ```bash nodemon index ``` and navigate in the browser to localhost:5000
 Ask a question by typing in your name and selecting a question.
 Askbot will look up the answer that is connected to your question in the database.
 You can contribute questions and answers in the 'post to the cloud' section.
