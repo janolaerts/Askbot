@@ -1,14 +1,13 @@
 //back-end
 const express = require('express');
 const socket = require('socket.io');
-const router = express.Router();
 const bodyParser = require('body-parser');
 const app = express();
 
 //middleware
 app.use(bodyParser.json());
 app.use(express.static('public'));
-app.use('/api', router);
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //view engine
 app.set('view engine', 'ejs');
@@ -28,6 +27,11 @@ app.get('/post', (request, response) => {
     if(request.query.question && request.query.answer){
         Answer.create({ question: request.query.question, answer: request.query.answer });
     }
+})
+
+app.post('/', (request, response) => {
+    console.log('POST request received');
+    response.end();
 })
 
 //websockets

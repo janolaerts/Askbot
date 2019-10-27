@@ -16,10 +16,10 @@
         </ul>
     </nav>
     <h1>Askbot</h1>
-    <div class="typing"></div>
+    <div class="thinking"></div>
     <div class="chat-container"></div>
-    <form class="questionForm">
-        <input type="text" placeholder="User" id="user">
+    <form class="questionForm" action="/" method="POST">
+        <input type="text" placeholder="Enter your name" id="user">
         <select class="questions" name="questions" id="question">
             <option>Select the question you want to ask</option>
             <% data.map(item => { %>
@@ -27,6 +27,7 @@
             <% }) %>
         </select>
         <input type="submit" class="submit">
+        <div style="color: white; font-weight: bold;"></div>
     </form>
     <script src="./modules/serverFront.js"></script>
     <script src="./modules/nav.js"></script>
