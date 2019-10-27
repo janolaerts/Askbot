@@ -40,8 +40,6 @@ app.post('/', urlencodedParser, (request, response) => {
     if(user && question != 'Select the question you want to ask'){
         Answer.findOne({ question: question }).then(data => io.sockets.emit('question', data));
     }
-
-    //Answer.find().then(data => response.render('index', { data: data }));
 })
 
 //mongo
